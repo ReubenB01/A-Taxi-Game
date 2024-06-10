@@ -1,6 +1,7 @@
 from search import *
 import math
 import heapq
+import re, math, time
 
 class RoutingGraph(Graph):
     """fefe"""
@@ -151,3 +152,277 @@ def print_map(map_graph,frontier,solution):
             route[row] = position 
     for i in route:
         print(i) 
+        
+        
+        
+#Tests
+#######################################################
+def q12ans():
+    print("Test 1:")
+    map_str = """\
+    +-------+
+    |   G   |
+    |       |
+    |   S   |
+    +-------+
+    """
+
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_actions(solution)
+    
+    
+    print("\n\nTest 2:")
+    map_str = """\
+    +-------+
+    |     XG|
+    |X XXX  |
+    | S     |
+    +-------+
+    """
+    
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_actions(solution)
+    
+    
+    print("\n\nTest 3:")
+    map_str = """\
+    +-------+
+    |  F  XG|
+    |X XXXX |
+    | 2     |
+    +-------+
+    """
+    
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_actions(solution)
+    
+    
+    print("\n\nTest 4:")
+    map_str = """\
+    +--+
+    |GS|
+    +--+
+    """
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_actions(solution)
+    
+    
+    print("\n\nTest 5:")
+    map_str = """\
+    +---+
+    |GF2|
+    +---+
+    """
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_actions(solution)
+    
+    
+    print("\n\nTest 6:")
+    start_time = time.time()
+    map_str = """\
+    +----+
+    | S  |
+    | SX |
+    | X G|
+    +----+
+    """
+    
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_actions(solution)
+    print("--- %s seconds ---" % (time.time() - start_time))
+    
+    print("\n\nTest 7:")
+    start_time = time.time()
+    map_str = """\
+    +---------+
+    |         |
+    |    G    |
+    |         |
+    +---------+
+    """
+    
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_actions(solution)
+    print("--- %s seconds ---" % (time.time() - start_time))
+    
+    print("\n\nTest 8")
+    start_time = time.time()
+    map_str = """\
+    +----------+
+    |    X     |
+    | S  X  G  |
+    |    X     |
+    +----------+
+    """
+    
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_actions(solution)    
+    print("--- %s seconds ---" % (time.time() - start_time))
+    
+
+def q3ans():
+    map_str = """\
++----------------+
+|                |
+|                |
+|                |
+|                |
+|                |
+|                |
+|        S       |
+|                |
+|                |
+|     G          |
+|                |
+|                |
+|                |
++----------------+
+"""
+
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_map(map_graph, frontier, solution)
+
+    print("\n\n")
+
+    map_str = """\
++----------------+
+|                |
+|                |
+|                |
+|                |
+|                |
+|                |
+|        S       |
+|                |
+|                |
+|     G          |
+|                |
+|                |
+|                |
++----------------+
+"""
+
+
+    map_graph = RoutingGraph(map_str)
+    # changing the heuristic so the search behaves like LCFS
+    map_graph.estimated_cost_to_goal = lambda node: 0
+
+    frontier = AStarFrontier(map_graph)
+
+    solution = next(generic_search(map_graph, frontier), None)
+    print_map(map_graph, frontier, solution)
+
+    print("\n\n")
+
+    map_str = """\
++-------------+
+| G         G |
+|      S      |
+| G         G |
++-------------+
+"""
+
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_map(map_graph, frontier, solution)
+
+    print("\n\n")
+
+    map_str = """\
++-------+
+|     XG|
+|X XXX  |
+|  S    |
++-------+
+"""
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_map(map_graph, frontier, solution)
+
+    print("\n\n")
+
+    map_str = """\
++--+
+|GS|
++--+
+"""
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_map(map_graph, frontier, solution)
+    
+    print("\n\n")
+
+    map_str = """\
++----+
+|    |
+| SX |
+| X G|
++----+
+"""
+
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_map(map_graph, frontier, solution)
+
+    print("\n\n")
+
+    map_str = """\
++---------------+
+|    G          |
+|XXXXXXXXXXXX   |
+|           X   |
+|  XXXXXX   X   |
+|  X S  X   X   |
+|  X        X   |
+|  XXXXXXXXXX   |
+|               |
++---------------+
+"""
+
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_map(map_graph, frontier, solution)
+
+    print("\n\n")
+
+    map_str = """\
++---------+
+|         |
+|    G    |
+|         |
++---------+
+"""
+
+    map_graph = RoutingGraph(map_str)
+    frontier = AStarFrontier(map_graph)
+    solution = next(generic_search(map_graph, frontier), None)
+    print_map(map_graph, frontier, solution)
+
+def main():
+    q12ans()
+    q3ans()
+
+if __name__ == "__main__": main()
